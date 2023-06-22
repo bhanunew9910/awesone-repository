@@ -1,0 +1,29 @@
+def checkout() {
+	dir(BUILD_ID) {
+	  checkout scmGit(branches: [[name: '*/test']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-id', url: 'https://github.com/bhanunew9910/awesone-repository.git']])
+}
+}
+node {
+	stage('chekout form github') {
+	checkout()
+}
+	try {
+		stage('File excuction') {
+		sh "cd ${BUILD_ID} && ${Test_Case}"
+}
+}
+	catch(e) {
+	currentBuild.result="WARM"
+}
+	stage('making a test file') {
+	sh "cd ${BUILD_ID} && touch test.txt"
+}
+	stage('making a zip file') {
+	sh "cd ${BUILD_ID} && zip -r demo.zip test.txt"
+}
+	stage('sending mail to team') {
+	emailext attachLog: true, body: '''Hi team,
+the job ${JOB_NAME} is completed with job number ${JOB_NUMBER}
+thanks''', subject: 'job complete', to: 'bhanunew9910@gmail.com'
+}
+}
