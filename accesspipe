@@ -7,23 +7,12 @@ node {
 	stage('chekout form github') {
 	checkout()
 }
-	try {
-		stage('File excuction') {
-		sh "cd ${BUILD_ID} && ${Test_Case}"
-}
-}
-	catch(e) {
-	currentBuild.result="WARM"
-}
-	stage('making a test file') {
-	sh "cd ${BUILD_ID} && touch test.txt"
-}
-	stage('making a zip file') {
-	sh "cd ${BUILD_ID} && zip -r demo.zip test.txt"
+	stage('making a test file && access aws') {
+	sh "ssh root@34.224.32.72 -o StrickHostKeyChecking=no touch file.txt"
 }
 	stage('sending mail to team') {
 	emailext attachLog: true, body: '''Hi team,
-the job ${JOB_NAME} is completed with job number ${JOB_NUMBER}
+the job ${JOB_NAME} is completed with build number ${BUILD_NUMBER} and job url is ${JOB_URL}
 thanks''', subject: 'job complete', to: 'bhanunew9910@gmail.com'
 }
 }
