@@ -9,5 +9,8 @@ node {
 }
 	stage('making a test file && access aws') {
 	sh "ssh root@34.224.32.72 -o StrickHostKeyChecking=no touch file.txt"
+withCredentials([sshUserPrivateKey(credentialsId: 'aws-linux', keyFileVariable: '')]) {
+    // some block
+}
 }
 }
