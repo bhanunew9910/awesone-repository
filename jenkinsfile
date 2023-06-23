@@ -14,6 +14,8 @@ node{
       sh 'ssh -o StrickHostKeyChecking=no root@54.221.28.248 touch file1.txt'
 }
 }
+    stage(send email){
+      emailext body: '''Hi team,
+the job ${JOB_NAME} is done with build id ${BUILD_ID}''', subject: 'complete job', to: 'bhanunew9910@gmail.com'
 }
-
-
+}
