@@ -1,0 +1,19 @@
+def checkout(){
+  dir(BUILD_ID){
+    checkout scmGit(branches: [[name: '*/test']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-access', url: 'https://github.com/bhanunew9910/awesone-repository.git']])
+}
+}
+node{
+  stages{
+    stage(chekcout){
+    checkout()
+}
+}
+    stage(login into aws and making file){
+      sshagent(['ssh-id']) {
+      sh 'ssh -o StrickHostKeyChecking=no root@54.221.28.248 touch file1.txt'
+}
+}
+}
+
+
