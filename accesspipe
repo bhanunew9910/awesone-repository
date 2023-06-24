@@ -1,16 +1,15 @@
-def checkout() {
-	dir(BUILD_ID) {
-	  checkout scmGit(branches: [[name: '*/test']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-id', url: 'https://github.com/bhanunew9910/awesone-repository.git']])
+def checkout(){
+    dir(BUILD_ID){
+      checkout scmGit(branches: [[name: '*/test']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-ed', url: 'https://github.com/bhanunew9910/awesone-repository.git']])
 }
 }
-node {
-	stage('chekout form github') {
-	checkout()
+node{
+  stages{
+    stage(checkout form git){
+      checkout()
 }
-	stage('making a test file && access aws') {
-	sh "ssh root@34.224.32.72 -o StrickHostKeyChecking=no touch file.txt"
-withCredentials([sshUserPrivateKey(credentialsId: 'aws-linux', keyFileVariable: '')]) {
-    // some block
+    stage(making a file){
+      sh "touch file.txt"
 }
 }
 }
