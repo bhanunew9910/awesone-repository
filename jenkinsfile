@@ -1,6 +1,6 @@
 def checkout(){
   dir(BUILD_ID){
-    checkout scmGit(branches: [[name: '*/test']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-access', url: 'https://github.com/bhanunew9910/awesone-repository.git']])
+   checkout scmGit(branches: [[name: '*/test']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-ed', url: 'https://github.com/bhanunew9910/awesone-repository.git']])
 }
 }
 node{
@@ -8,14 +8,14 @@ node{
     stage(chekcout){
     checkout()
 }
-}
     stage(login into aws and making file){
-      sshagent(['ssh-id']) {
-      sh 'ssh -o StrickHostKeyChecking=no root@54.221.28.248 touch file1.txt'
+      sshagent(['317208a4-d588-4ceb-84c4-bbacc0f54929']) {
+      sh "ssh -o StrickHostKeyChecking=no root@52.90.146.7 touch file(BUILD_ID).txt
 }
 }
     stage(send email){
       emailext body: '''Hi team,
 the job ${JOB_NAME} is done with build id ${BUILD_ID}''', subject: 'complete job', to: 'bhanunew9910@gmail.com'
+}
 }
 }
